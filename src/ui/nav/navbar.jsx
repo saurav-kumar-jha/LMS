@@ -1,15 +1,24 @@
 import { BookOpen, Search, Menu, X } from 'lucide-react';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { courses } from '../../components/data/course';
 
 function Navbar() {
   const [isLogin, setIsLogin] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [search, setSearch] = useState("")
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  const [serachParams, setSearchparama] = useSearchParams()
+  const [search, setSearch] = useState(serachParams.get("s") || "")
   const router = useNavigate();
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    setSearchparama({ s: value })
+  };
+
+  const filteredCours = serachParams ? Object.values(courses).filter((c) => c.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())) : []
+
+
 
   return (
     <nav
@@ -57,6 +66,28 @@ function Navbar() {
                 className="pl-10 pr-4 py-2 rounded-lg border-0 text-white placeholder-gray-400 text-sm focus:ring-2 focus:ring-green-400 outline-none"
                 style={{ backgroundColor: '#2a3328' }}
               />
+              {search && (
+                <ul className="absolute top-full mt-2 w-full bg-[#2a2c2a] text-white border rounded-md shadow-md z-10">
+                  {filteredCours.length > 0 ? (
+                    filteredCours.map((course) => (
+                      <li
+                        key={course.id}
+                        className="px-3 py-2 cursor-pointer flex justify-evenly items-center gap-2 hover:bg-[#222422]"
+                        onClick={() =>{ 
+                          router(`/course/${course.id}`)
+                          setSearch("")
+                          setSearchparama({})
+                        }}
+                      >
+                        <img src={course.image} className='h-[90%] w-[20%] object-fill rounded scale-110 ' alt="" />
+                        {course.title}
+                      </li>
+                    ))
+                  ) : (
+                    <li className="px-3 py-2 text-gray-500">No courses found</li>
+                  )}
+                </ul>
+              )}
             </div>
 
             {!isLogin && (
@@ -90,9 +121,8 @@ function Navbar() {
 
       {/* Mobile Menu (Drawer) */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-[#1a1f1a] border-l border-[#2a3328] transform ${
-          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        } transition-transform duration-300 ease-in-out z-50`}
+        className={`fixed top-0 right-0 h-full w-64 bg-[#1a1f1a] border-l border-[#2a3328] transform ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          } transition-transform duration-300 ease-in-out z-50`}
       >
         {/* Close button */}
         <div className="flex justify-between items-center p-4 border-b border-[#2a3328]">

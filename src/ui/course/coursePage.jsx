@@ -1,20 +1,97 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BookOpen, Search, ChevronDown, Filter, Star, Clock, Users, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 import { courses } from '../../components/data/course';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const CoursePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Categories');
   const [selectedPricing, setSelectedPricing] = useState('Free/Paid');
   const [selectedRating, setSelectedRating] = useState('All Ratings');
-  const [selectedDuration, setSelectedDuration] = useState('All Duration');
+  const [selectLevel, setSelectLevel] = useState('All Duration');
+  const [course, setCourse] = useState(Object.values(courses))
   const navigate = useNavigate()
   const categories = ['All Categories', 'Data Science', 'Web Development', 'Design', 'Business', 'Marketing', 'AI & Machine Learning'];
   const pricingOptions = ['Free/Paid', 'Free Only', 'Paid Only'];
   const ratingOptions = ['All Ratings', '4.5 & up', '4.0 & up', '3.5 & up'];
-  const durationOptions = ['All Duration', '0-2 hours', '3-6 hours', '7-17 hours', '17+ hours'];
+  const durationOptions = ['All Level', 'Beginner', 'Intermediate', 'Advanced'];
+  const [serachParams, setSearchparama] = useSearchParams()
+  const [search, setSearch] = useState(serachParams.get("s") || "")
 
-  
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    setSearchparama({ s: value })
+  };
+
+  useEffect(()=>{
+    if(search){
+      const filtered = Object.values(courses).filter((c) => c.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
+      setCourse(filtered)
+    }else{
+      setCourse(Object.values(courses))
+    }
+   
+  },[search])
+
+  const handlePrice = (e)=>{
+    const value = e.target.value;
+    setSelectedPricing(value)
+    let filtered = [];
+
+    if(value == 'Free Only'){
+      filtered = Object.values(courses).filter((c)=>c.price === 0);
+    }else if(value == 'Paid Only'){
+      filtered = Object.values(courses).filter((c)=>c.price > 0);
+    }else{
+      filtered = Object.values(courses)
+    }
+
+    setCourse(filtered)
+  }
+  const handleRating = (e)=>{
+    const value = e.target.value;
+    setSelectedRating(value)
+    let filtered = [];
+
+    if(value == '4.5 & up'){
+      filtered = Object.values(courses).filter((c)=>c.rating >= 4.5);
+    }else if(value == '4.0 & up'){
+      filtered = Object.values(courses).filter((c)=>c.rating >= 4 && c.rating < 4.5);
+    }else if(value == '3.5 & up'){
+      filtered = Object.values(courses).filter((c)=>c.rating >= 3.5 && c.rating < 4)
+    }else{
+      filtered = Object.values(courses)
+    }
+
+    setCourse(filtered)
+  }
+  //'All Categories', 'Data Science', 'Web Development', 'Design', 'Business', 'Marketing', 'AI & Machine Learning'
+  const handleCategory = (e)=>{
+    const value = e.target.value;
+    setSelectedCategory(value)
+    let filtered = [];
+
+    if(value == 'All Categories'){
+      filtered = Object.values(courses)
+    }else{
+      filtered = Object.values(courses).filter((c)=>c.category.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+    }
+
+    setCourse(filtered)
+  }
+  const handleLevel = (e)=>{
+    const value = e.target.value;
+    setSelectLevel(value)
+    let filtered = [];
+
+    if(value == 'All Level'){
+      filtered = Object.values(courses)
+    }else{
+      filtered = Object.values(courses).filter((c)=>c.level.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+    }
+
+    setCourse(filtered)
+  }
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#1a1f1a' }}>
@@ -35,6 +112,8 @@ const CoursePage = () => {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
+                value={search}
+                onChange={handleSearch}
                 placeholder="Search for courses..."
                 className="w-full pl-12 pr-4 py-4 rounded-xl border-0 text-white placeholder-gray-400 text-lg focus:ring-2 focus:ring-green-400 outline-none"
                 style={{ backgroundColor: '#2a3328' }}
@@ -48,7 +127,7 @@ const CoursePage = () => {
             <div className="relative">
               <select 
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={handleCategory}
                 className="appearance-none px-4 py-2 pr-8 rounded-lg border-0 text-white focus:ring-2 focus:ring-green-400 outline-none cursor-pointer"
                 style={{ backgroundColor: '#2a3328' }}
               >
@@ -63,7 +142,7 @@ const CoursePage = () => {
             <div className="relative">
               <select 
                 value={selectedPricing}
-                onChange={(e) => setSelectedPricing(e.target.value)}
+                onChange={handlePrice}
                 className="appearance-none px-4 py-2 pr-8 rounded-lg border-0 text-white focus:ring-2 focus:ring-green-400 outline-none cursor-pointer"
                 style={{ backgroundColor: '#2a3328' }}
               >
@@ -78,7 +157,7 @@ const CoursePage = () => {
             <div className="relative">
               <select 
                 value={selectedRating}
-                onChange={(e) => setSelectedRating(e.target.value)}
+                onChange={handleRating}
                 className="appearance-none px-4 py-2 pr-8 rounded-lg border-0 text-white focus:ring-2 focus:ring-green-400 outline-none cursor-pointer"
                 style={{ backgroundColor: '#2a3328' }}
               >
@@ -92,8 +171,8 @@ const CoursePage = () => {
             {/* Duration Filter */}
             <div className="relative">
               <select 
-                value={selectedDuration}
-                onChange={(e) => setSelectedDuration(e.target.value)}
+                value={selectLevel}
+                onChange={handleLevel}
                 className="appearance-none px-4 py-2 pr-8 rounded-lg border-0 text-white focus:ring-2 focus:ring-green-400 outline-none cursor-pointer"
                 style={{ backgroundColor: '#2a3328' }}
               >
@@ -104,10 +183,10 @@ const CoursePage = () => {
               <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 pointer-events-none" />
             </div>
 
-            <button className="flex items-center px-4 py-2 rounded-lg border-0 text-white hover:bg-opacity-80 transition-colors" style={{ backgroundColor: '#2a3328' }}>
+            {/* <button className="flex items-center px-4 py-2 rounded-lg border-0 text-white hover:bg-opacity-80 transition-colors" style={{ backgroundColor: '#2a3328' }}>
               <Filter className="h-4 w-4 mr-2" />
               More Filters
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
@@ -116,7 +195,9 @@ const CoursePage = () => {
       <div className="pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Object.values(courses).map((course) => (
+            {course == [] ? (
+              <h1 className='text-zinc-400 text-center'>Course not found</h1>
+            ) :( course.map((course) => (
               <div key={course.id} onClick={()=>navigate(`/course/${course.id}`)} className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" style={{ backgroundColor: '#f5f1eb' }}>
                 {/* Course Image/Icon */}
                 <div className="relative h-48 flex items-center justify-center text-6xl overflow-hidden" style={{ backgroundColor: "#4a7c80" }}>
@@ -124,8 +205,8 @@ const CoursePage = () => {
                   <img src={course.image} alt={course.title} />
                   
                   {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: '#2a3328', color: '#ffffff' }}>
+                  <div className="absolute -top-4 left-4">
+                    <span className="px-2 py-1 rounded-full text-xs font-bold" style={{ backgroundColor: '#2a3328', color: '#ffffff' }}>
                       {course.category}
                     </span>
                   </div>
@@ -145,7 +226,7 @@ const CoursePage = () => {
                       {course.level}
                     </span>
                     <span className="text-lg font-bold" style={{ color: course.price === 'Free' ? 'green' : 'blue' }}>
-                      {course.price}
+                      ${course.price}
                     </span>
                   </div>
 
@@ -178,7 +259,7 @@ const CoursePage = () => {
                   </button>
                 </div>
               </div>
-            ))}
+            )))}
           </div>
 
           {/* Pagination */}

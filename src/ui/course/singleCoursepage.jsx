@@ -66,7 +66,7 @@ function SingleCoursePage() {
                                             className="w-full h-40 object-cover rounded-lg mb-4"
                                         />
                                         <div className="flex items-center justify-between mb-4">
-                                            <span className="text-3xl font-bold text-green-400">{course.price}</span>
+                                            <span className="text-3xl font-bold text-green-400">${course.price}</span>
                                             <span className="text-gray-400">one-time payment</span>
                                         </div>
                                     </div>

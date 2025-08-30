@@ -11,7 +11,8 @@ export const courses = {
     students: 12450,
     duration: "8 weeks",
     level: "Beginner",
-    price: "$99",
+    category:"Data Science",
+    price:99,
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
     description:
@@ -68,7 +69,8 @@ export const courses = {
     students: 8320,
     duration: "12 weeks",
     level: "Advanced",
-    price: "$149",
+    category:"AI & Machine Learning",
+    price: 149,
     image:
       "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=400&fit=crop",
     description:
@@ -120,7 +122,8 @@ export const courses = {
     students: 15670,
     duration: "16 weeks",
     level: "Intermediate",
-    price: "$129",
+    category:"Web Development",
+    price: 0,
     image:
       "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&h=400&fit=crop",
     description:
