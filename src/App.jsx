@@ -1,5 +1,4 @@
 import { BrowserRouter, createBrowserRouter, Outlet, Router, RouterProvider, useLocation } from 'react-router-dom'
-import './App.css'
 import Login from './ui/auth/login'
 import Register from './ui/auth/register'
 import Navbar from './ui/nav/navbar'
@@ -7,6 +6,9 @@ import CoursePage from './ui/course/coursePage'
 import Home from './ui/home'
 import Footer from './ui/nav/footer'
 import SingleCoursePage from './ui/course/singleCoursepage'
+import InstructorsPage from './ui/instructor/iinstructorPage'
+import WishlistPage from './ui/wishlist/wishlist'
+import UserProfilePage from './ui/user/userProfile'
 
 const HomePage = ()=>{
   const navigate = useLocation()
@@ -35,6 +37,18 @@ const router = createBrowserRouter([
     {
       path:"/course/:id",
       element:<SingleCoursePage/>
+    },
+    {
+      path:"/instructor",
+      element:<InstructorsPage/>
+    },
+    {
+      path:"/wishlist",
+      element:<WishlistPage/>
+    },
+    {
+      path:"/user",
+      element:<UserProfilePage/>
     }
     
   ]

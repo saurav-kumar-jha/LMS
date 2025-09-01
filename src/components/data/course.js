@@ -13,6 +13,7 @@ export const courses = {
     level: "Beginner",
     category:"Data Science",
     price:99,
+    wishlist:false,
     image:
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop",
     description:
@@ -71,6 +72,7 @@ export const courses = {
     level: "Advanced",
     category:"AI & Machine Learning",
     price: 149,
+    wishlist:false,
     image:
       "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=400&fit=crop",
     description:
@@ -124,6 +126,7 @@ export const courses = {
     level: "Intermediate",
     category:"Web Development",
     price: 0,
+    wishlist:false,
     image:
       "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&h=400&fit=crop",
     description:

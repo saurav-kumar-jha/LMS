@@ -43,13 +43,13 @@ function Navbar() {
             <Link to="/course" className="text-gray-300 hover:text-white transition-colors">
               Courses
             </Link>
-            <Link to="#" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/instructor" className="text-gray-300 hover:text-white transition-colors">
               Instructors
             </Link>
             <Link to="#" className="text-gray-300 hover:text-white transition-colors">
               My Learning
             </Link>
-            <Link to="#" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/wishlist" className="text-gray-300 hover:text-white transition-colors">
               Wishlist
             </Link>
           </div>
@@ -149,7 +149,7 @@ function Navbar() {
             Courses
           </Link>
           <Link
-            to="#"
+            to="/instructor"
             onClick={() => setIsMenuOpen(false)}
             className="text-gray-300 hover:text-white transition-colors"
           >
@@ -163,7 +163,7 @@ function Navbar() {
             My Learning
           </Link>
           <Link
-            to="#"
+            to="/wishlist"
             onClick={() => setIsMenuOpen(false)}
             className="text-gray-300 hover:text-white transition-colors"
           >
