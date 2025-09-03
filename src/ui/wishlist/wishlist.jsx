@@ -95,7 +95,7 @@ const WishlistPage = () => {
           <>
             {/* Action Bar */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-              <div className="flex gap-3">
+              <div className="flex gap-3 ">
                 <button className="bg-green-600  cursor-pointer hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2">
                   <ShoppingCart size={18} />
                   Enroll in All ({wishlistCourses.length})

@@ -9,6 +9,7 @@ import SingleCoursePage from './ui/course/singleCoursepage'
 import InstructorsPage from './ui/instructor/iinstructorPage'
 import WishlistPage from './ui/wishlist/wishlist'
 import UserProfilePage from './ui/user/userProfile'
+import CourseUploadPage from './ui/course/courseUpload'
 
 const HomePage = ()=>{
   const navigate = useLocation()
@@ -49,10 +50,14 @@ const router = createBrowserRouter([
     {
       path:"/user",
       element:<UserProfilePage/>
-    }
-    
+    },
+    {
+      path:"/course/upload",
+      element:<CourseUploadPage/>
+    }    
   ]
   },
+  
   
 ])
 function App() {
