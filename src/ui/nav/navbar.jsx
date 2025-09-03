@@ -46,7 +46,7 @@ function Navbar() {
             <Link to="/instructor" className="text-gray-300 hover:text-white transition-colors">
               Instructors
             </Link>
-            <Link to="#" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/course/upload" className="text-gray-300 hover:text-white transition-colors">
               My Learning
             </Link>
             <Link to="/wishlist" className="text-gray-300 hover:text-white transition-colors">
